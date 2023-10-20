@@ -1,0 +1,37 @@
+{
+  "name": "esnacc-openapi-sdk",
+  "version": "1.0.0",
+  "description": "Fancy frontend for showing and testing openapi schemas derived from asn1 files created trough esnacc",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "node esbuild.mjs",
+    "dev": "node esbuild-dev.mjs",
+    "lint": "eslint --cache --fix -c .eslintrc.cjs src/**/*.{js,ts,tsx}"
+  },
+  "author": "Dominik Kerzel",
+  "license": "MIT",
+  "dependencies": {
+    "goober": "^2.1.13",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-json-view": "^1.21.3",
+    "react-select": "^5.7.7",
+    "swagger-client": "^3.23.1",
+    "swagger-ui": "^5.9.0",
+    "swagger-ui-react": "^5.9.0",
+    "ts-loader": "^9.4.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.3.2",
+    "@types/react-dom": "^18.2.13",
+    "@types/swagger-ui": "^3.52.2",
+    "@types/swagger-ui-react": "^4.18.1",
+    "@typescript-eslint/eslint-plugin": "^6.8.0",
+    "@typescript-eslint/parser": "^6.8.0",
+    "csstype": "^3.1.2",
+    "dotenv-webpack": "^8.0.1",
+    "esbuild": "^0.19.5",
+    "eslint": "^8.51.0",
+    "typescript": "^5.2.2"
+  }
+}
