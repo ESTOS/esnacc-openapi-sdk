@@ -1,6 +1,11 @@
 {
   "name": "@estos/esnacc-openapi-sdk",
   "version": "1.0.5",
+  "homepage": "https://www.estos.de/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ESTOS/esnacc-openapi-sdk.git"
+  },
   "description": "Fancy frontend for showing and testing openapi schemas derived from asn1 files created trough esnacc",
   "keywords": [
     "swagger-ui",
