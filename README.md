@@ -80,8 +80,7 @@ You can use it like below:
           },
         },
         {
-          schemaUrl: "/schema/ENetUC_Event_Manager.json", label: "ENetUC_Event_Manager",
-          schemaUrl: "/schema/ENetUC_Settings_Manager.json", label: "ENetUC_Settings_Manager", "injectSpec": {
+          schemaUrl: "/schema/ENetUC_Event_Manager.json", label: "ENetUC_Event_Manager", "injectSpec": {
             servers: [
               {
                 "url": "ws://localhost:3020/ws"
