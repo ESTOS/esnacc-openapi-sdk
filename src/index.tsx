@@ -11,7 +11,4 @@ function renderSDK(args: SDKOptions) {
         ReactDOM.render(<App schemas={args.schemas}></App>, el);
 }
 
-//@ts-ignore
-if (window) window.EsnaccOpenApiSDK = renderSDK;
-
 export default renderSDK;

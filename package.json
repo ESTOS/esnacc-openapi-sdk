@@ -1,6 +1,6 @@
 {
   "name": "@estos/esnacc-openapi-sdk",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Fancy frontend for showing and testing openapi schemas derived from asn1 files created trough esnacc",
   "keywords": ["swagger-ui", "openapi", "asn1", "esnacc", "ui", "schema"],
   "main": "src/index.js",
@@ -13,7 +13,13 @@
   "types": "./dist/index.d.ts",
   "exports": {
     "./dist/esnacc-openapi-sdk.css": "./dist/esnacc-openapi-sdk.css",
-    ".": "./dist/esnacc-openapi-sdk.js"
+    ".": {
+      "browser": "./dist/esnacc-openapi-sdk-bundle.js",
+      "default": {
+        "import": "./dist/esnacc-openapi-sdk.js",
+        "require": "./dist/esnacc-openapi-sdk.cjs"
+      }
+    }
   },
   "author": "Dominik Kerzel",
   "license": "MIT",
