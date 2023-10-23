@@ -1,6 +1,6 @@
 {
   "name": "@estos/esnacc-openapi-sdk",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Fancy frontend for showing and testing openapi schemas derived from asn1 files created trough esnacc",
   "keywords": ["swagger-ui", "openapi", "asn1", "esnacc", "ui", "schema"],
   "main": "src/index.js",
@@ -17,7 +17,8 @@
   },
   "author": "Dominik Kerzel",
   "license": "MIT",
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
     "goober": "^2.1.13",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -26,9 +27,6 @@
     "swagger-client": "^3.23.1",
     "swagger-ui": "^5.9.0",
     "swagger-ui-react": "^5.9.0",
-    "ts-loader": "^9.4.2"
-  },
-  "devDependencies": {
     "@types/node": "^20.3.2",
     "@types/react-dom": "^18.2.13",
     "@types/swagger-ui": "^3.52.2",
@@ -38,7 +36,6 @@
     "csstype": "^3.1.2",
     "dotenv-webpack": "^8.0.1",
     "esbuild": "^0.19.5",
-    "eslint": "^8.51.0",
-    "typescript": "^5.2.2"
+    "eslint": "^8.51.0"
   }
 }
