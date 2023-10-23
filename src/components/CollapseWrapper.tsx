@@ -29,14 +29,13 @@ const Comp = (Original: any, system: any) => (props: any) => {
                     
                     let isEvent = true;
                     try {
-                        isEvent = system.spec().get("json").get("paths").get(path).get("post").get("responses").get("200") == undefined;
+                        isEvent = system.spec().get("json").get("paths").get(path).get("post").get("responses") == undefined;
                     } catch (error) {
                         /* empty */ 
                     }
-                 
-                    const operationId = system.spec().get("json").get("paths").get(path).get("post").get("operationId");
                    
                     if (isEvent) {
+                        const operationId = system.spec().get("json").get("paths").get(path).get("post").get("operationId");
                         return <>
                             <Original {...props}/>
                             <EventViewer server={server} operationId={operationId} system={system}></EventViewer>
