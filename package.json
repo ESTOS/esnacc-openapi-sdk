@@ -1,7 +1,8 @@
 {
   "name": "@estos/esnacc-openapi-sdk",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Fancy frontend for showing and testing openapi schemas derived from asn1 files created trough esnacc",
+  "keywords": ["swagger-ui", "openapi", "asn1", "esnacc", "ui", "schema"],
   "main": "src/index.js",
   "scripts": {
     "build": "node esbuild.mjs",
@@ -9,7 +10,7 @@
     "lint": "eslint --cache --fix -c .eslintrc.cjs src/**/*.{js,ts,tsx}",
     "build:types": "tsc --emitDeclarationOnly --declaration --project tsconfig.build.json"
   },
-  "types": "./index.d.ts",
+  "types": "./dist/index.d.ts",
   "exports": {
     "./dist/esnacc-openapi-sdk.css": "./dist/esnacc-openapi-sdk.css",
     ".": "./dist/esnacc-openapi-sdk.js"
