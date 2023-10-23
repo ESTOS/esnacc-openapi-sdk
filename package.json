@@ -1,6 +1,6 @@
 {
   "name": "@estos/esnacc-openapi-sdk",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Fancy frontend for showing and testing openapi schemas derived from asn1 files created trough esnacc",
   "keywords": [
     "swagger-ui",
@@ -21,7 +21,7 @@
   "exports": {
     "./dist/esnacc-openapi-sdk.css": "./dist/esnacc-openapi-sdk.css",
     ".": {
-      "import": "./dist/esnacc-openapi-sdk.mjs",
+      "import": "./dist/esnacc-openapi-sdk.js",
       "require": "./dist/esnacc-openapi-sdk.cjs"
     }
   },

@@ -59,9 +59,10 @@ You can use it like below:
 
 <body>
   <div id="ui"></div>
-  <script type="text/javascript" href="https://unpkg.com/@estos/esnacc-openapi-sdk/dist/bundle.js"></script>
-  <script>
-    EsnaccOpenApiSDK({
+  <script type="text/javascript" href="https://unpkg.com/@estos/esnacc-openapi-sdk/dist/esnacc-openapi-sdk.js"></script>
+  <script type="module">
+    import SDK from "https://unpkg.com/@estos/esnacc-openapi-sdk/dist/esnacc-openapi-sdk.js"
+    SDK({
       domId: "ui", schemas: [
         { schemaUrl: "/schema/ENetUC_Common.json", label: "ENetUC_Common" },
         {

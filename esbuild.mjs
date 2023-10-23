@@ -12,7 +12,7 @@ await esbuild.build({
         'process.env.NODE_ENV': '"production"',
     },
     drop: ["console", "debugger"],
-    outfile: "dist/esnacc-openapi-sdk.mjs",
+    outfile: "dist/esnacc-openapi-sdk.js",
 });
 
 await esbuild.build({
