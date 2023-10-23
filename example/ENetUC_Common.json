@@ -4,7 +4,7 @@
 		"title": "ENetUC_Common",
 		"version": "0.0.1",
 		"summary": "Common interface definitions\n\n",
-		"description": "## Module description\n\nThis module contains common usable \t\tstrutures for the other interfaces.\n\nThere should not be any function\/operation defintions in this module.\n\n"
+		"description": "## Module description\n\nThis module contains common usable strutures for the other interfaces.\n\nThere should not be any function\/operation defintions in this module.\n\n"
 	},
 	"paths": {},
 	"components": {
