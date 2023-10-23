@@ -1,34 +1,17 @@
-import App from "./app";
-import { setup } from "goober";
 import ReactDOM from "react-dom";
+import App from "./app";
 import React from "react";
-import { SchemaSource } from "./types";
+import { setup } from "goober";
+import { SDKOptions } from "./types";
 
 setup(React.createElement);
+function renderSDK(args: SDKOptions) {
+    const el = document.getElementById(args.domId);
+    if (el)
+        ReactDOM.render(<App schemas={args.schemas}></App>, el);
+}
 
-const schemas: SchemaSource[] = [
-    { schemaUrl: "/schema/ENetUC_Common.json", label: "ENetUC_Common" },
-    {
-        schemaUrl: "/schema/ENetUC_Settings_Manager.json", label: "ENetUC_Settings_Manager", "servers": [
-            {
-                "url": "ws://localhost:3020/ws"
-            },
-            {
-                "url": "http://localhost:3020/rest"
-            }
-        ],
-    },
-    {
-        schemaUrl: "/schema/ENetUC_Event_Manager.json", label: "ENetUC_Event_Manager", "servers": [
-            {
-                "url": "ws://localhost:3020/ws"
-            },
-            {
-                "url": "http://localhost:3020/rest"
-            }
-        ],
-    },
-];
+//@ts-ignore
+if (window) window.EsnaccOpenApiSDK = renderSDK;
 
-
-ReactDOM.render(<App schemas={schemas}></App>, document.body);
+export default renderSDK;

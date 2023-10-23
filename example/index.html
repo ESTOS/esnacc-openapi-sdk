@@ -10,10 +10,11 @@
 </head>
 
 <body>
+  <div id="ui"></div>
   <script type="text/javascript" src="/esbuild/bundle.js"></script>
   <script>
     EsnaccOpenApiSDK({
-      el: document.body, schemas: [
+      domId: "ui", schemas: [
         { schemaUrl: "/schema/ENetUC_Common.json", label: "ENetUC_Common" },
         {
           schemaUrl: "/schema/ENetUC_Settings_Manager.json", label: "ENetUC_Settings_Manager", "servers": [

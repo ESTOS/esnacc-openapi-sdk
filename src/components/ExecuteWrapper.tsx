@@ -1,5 +1,4 @@
 import { css, keyframes } from "goober";
-import React from "react";
 
 const loading = keyframes({
     "msFlowFrom, to": {

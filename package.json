@@ -6,7 +6,13 @@
   "scripts": {
     "build": "node esbuild.mjs",
     "dev": "node esbuild-dev.mjs",
-    "lint": "eslint --cache --fix -c .eslintrc.cjs src/**/*.{js,ts,tsx}"
+    "lint": "eslint --cache --fix -c .eslintrc.cjs src/**/*.{js,ts,tsx}",
+    "build:types": "tsc --emitDeclarationOnly --declaration --project tsconfig.build.json"
+  },
+  "types": "./index.d.ts",
+  "exports": {
+    "./dist/esnacc-openapi-sdk.css": "./dist/esnacc-openapi-sdk.css",
+    ".": "./dist/esnacc-openapi-sdk.js"
   },
   "author": "Dominik Kerzel",
   "license": "MIT",

@@ -2,10 +2,14 @@
 import * as esbuild from "esbuild";
 
 await esbuild.build({
-    entryPoints: ["src/browser.tsx"],
+    entryPoints: ["src/index.tsx"],
     bundle: true,
     minify: true,
-    sourcemap: process.env.DEV ? true : false,
+    sourcemap: false,
     jsx: "automatic",
-    outfile: "dist/bundle.js",
+    define: {
+        'process.env.NODE_ENV': '"production"',
+    },
+    drop: ["console", "debugger"],
+    outfile: "dist/esnacc-openapi-sdk.js",
 });

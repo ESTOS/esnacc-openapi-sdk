@@ -1,4 +1,4 @@
-const Comp = () => {
+const Comp = () => () => {
     return null;
 };
 

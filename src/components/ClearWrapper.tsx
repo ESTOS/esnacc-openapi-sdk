@@ -1,5 +1,4 @@
 import { css } from "goober";
-import React from "react";
 
 const ButtonStyle = css({
     flex: "1 1 0px",
@@ -12,7 +11,7 @@ const ButtonStyle = css({
 const Comp = (Original: any, system: any) => (props: any) => {
     const server = system.oas3Selectors.selectedServer();
     if (server && (server.startsWith("ws") || server.startsWith("wss"))) {
-        return null;
+        return <></>;
     }
     return (
         <div className={ButtonStyle}>

@@ -2,7 +2,7 @@
 import * as esbuild from "esbuild";
 
 let ctx = await esbuild.context({
-    entryPoints: ["src/browser.tsx"],
+    entryPoints: ["src/index.tsx"],
     bundle: true,
     minify: false,
     sourcemap: true,

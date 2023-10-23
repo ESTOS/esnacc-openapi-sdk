@@ -42,6 +42,6 @@ export interface SchemaSource {
 }
 
 export interface SDKOptions {
-    el: Node,
-    schemas: SchemaSource[]
+    schemas: SchemaSource[],
+    domId: string,
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { OwnEvent } from "../types";
 
 const Comp = (Original: any, system: any) => (props: any) => {

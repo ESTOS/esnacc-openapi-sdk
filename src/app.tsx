@@ -1,5 +1,5 @@
 import SwaggerUI from "swagger-ui-react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "swagger-ui/dist/swagger-ui.css";
 import plugin from "./plugin";
 import Select from "react-select";
@@ -18,7 +18,6 @@ const Comp = (props: { schemas: SchemaSource[] }) => {
                 if (servers) {
                     schema.servers = servers;
                 }
-                console.log(JSON.stringify(schema));
                 setSpec(schema);
             })();
         }
