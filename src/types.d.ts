@@ -1,3 +1,4 @@
+import {  OpenAPIV3_1 } from "openapi-types";
 
 export interface Dictionary<T, K> {
     [key: T]: K
@@ -31,14 +32,12 @@ export interface OwnEvent {
     type: "invoke" | "result" | "reject" | "error"
 }
 
+type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>
+
 export interface SchemaSource {
     schemaUrl: string,
     label?: string,
-    servers?: {
-        url: string,
-        // for more see OpenApi Spec 3.1 https://swagger.io/specification
-        [key: string]: any
-    }[]
+    injectSpec?: PartialBy<OpenAPIV3_1.Document, "info" | "openapi">
 }
 
 export interface SDKOptions {

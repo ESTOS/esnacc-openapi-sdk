@@ -28,15 +28,17 @@ SDK({
             schemaUrl: "/schema/ENetUC_Settings_Manager.json", 
             // Label to show (if not provided shows url)
             label: "ENetUC_Settings_Manager",
-            // Servers from the OpenApi schema to inject into the schema (not needed) https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#serverObject
-            "servers": [
-                {
-                    "url": "ws://localhost:3020/ws"
-                },
-                {
-                    "url": "http://localhost:3020/rest"
-                }
-            ],
+            // Inject things into the OpenApi Schema loaded from the url (Reference: https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#serverObject)
+            "injectSpec": {
+                servers: [
+                    {
+                      "url": "ws://localhost:3020/ws"
+                    },
+                    {
+                      "url": "http://localhost:3020/rest"
+                    }
+                ]
+            },
         }
     ] 
 })
@@ -66,24 +68,29 @@ You can use it like below:
       domId: "ui", schemas: [
         { schemaUrl: "/schema/ENetUC_Common.json", label: "ENetUC_Common" },
         {
-          schemaUrl: "/schema/ENetUC_Settings_Manager.json", label: "ENetUC_Settings_Manager", "servers": [
-            {
-              "url": "ws://localhost:3020/ws"
-            },
-            {
-              "url": "http://localhost:3020/rest"
-            }
-          ],
+          schemaUrl: "/schema/ENetUC_Settings_Manager.json", label: "ENetUC_Settings_Manager", "injectSpec": {
+            servers: [
+              {
+                "url": "ws://localhost:3020/ws"
+              },
+              {
+                "url": "http://localhost:3020/rest"
+              }
+            ]
+          },
         },
         {
-          schemaUrl: "/schema/ENetUC_Event_Manager.json", label: "ENetUC_Event_Manager", "servers": [
-            {
-              "url": "ws://localhost:3020/ws"
-            },
-            {
-              "url": "http://localhost:3020/rest"
-            }
-          ],
+          schemaUrl: "/schema/ENetUC_Event_Manager.json", label: "ENetUC_Event_Manager",
+          schemaUrl: "/schema/ENetUC_Settings_Manager.json", label: "ENetUC_Settings_Manager", "injectSpec": {
+            servers: [
+              {
+                "url": "ws://localhost:3020/ws"
+              },
+              {
+                "url": "http://localhost:3020/rest"
+              }
+            ]
+          },
         },
       ]
     })

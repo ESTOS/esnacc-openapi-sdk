@@ -4,7 +4,7 @@ import "swagger-ui/dist/swagger-ui.css";
 import plugin from "./plugin";
 import Select from "react-select";
 import { SchemaSource } from "./types";
-import { fetchJson } from "./utils";
+import { fetchJson, mergeDeep } from "./utils";
 
 const Comp = (props: { schemas: SchemaSource[] }) => {
     const [selected, setSelected] = useState<any>(null);
@@ -14,9 +14,9 @@ const Comp = (props: { schemas: SchemaSource[] }) => {
         if (selected) {
             (async () => {
                 const schema: any = await fetchJson(selected.value);
-                const servers = props.schemas[selected.index]?.servers;
-                if (servers) {
-                    schema.servers = servers;
+                const injectSpec = props.schemas[selected.index]?.injectSpec;
+                if (injectSpec) {
+                    setSpec(mergeDeep(schema, injectSpec));
                 }
                 setSpec(schema);
             })();

@@ -6,6 +6,7 @@ let ctx = await esbuild.context({
     bundle: true,
     minify: false,
     sourcemap: true,
+    format: "esm",
     jsx: "automatic",
     outfile: "example/esbuild/bundle.js",
 });
