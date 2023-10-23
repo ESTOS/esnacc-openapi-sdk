@@ -5,6 +5,7 @@ import OperationWrapper from "./components/OperationWrapper";
 import ResponsesWrapper from "./components/ResponsesWrapper";
 import ExecuteWrapper from "./components/ExecuteWrapper";
 import ClearWrapper from "./components/ClearWrapper";
+import CollapseWrapper from "./components/CollapseWrapper";
 import OperationSummaryPathWrapper from "./components/OperationSummaryPathWrapper";
 import { executeRequestWrapper, userExecute } from "./fn/execute";
 import * as websocketActions from "./websocket/actions";
@@ -26,6 +27,7 @@ const Plugin = function () {
             liveResponse: LiveResponseWrapper,
             execute: ExecuteWrapper,
             clear: ClearWrapper,
+            Collapse: CollapseWrapper,
         },
         fn: {
             execute: userExecute,
