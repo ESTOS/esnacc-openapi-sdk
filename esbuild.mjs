@@ -12,21 +12,7 @@ await esbuild.build({
         'process.env.NODE_ENV': '"production"',
     },
     drop: ["console", "debugger"],
-    outfile: "dist/esnacc-openapi-sdk.js",
-});
-
-await esbuild.build({
-    entryPoints: ["src/browser.tsx"],
-    bundle: true,
-    minify: true,
-    sourcemap: false,
-    external: ["*.css"],
-    jsx: "automatic",
-    define: {
-        'process.env.NODE_ENV': '"production"',
-    },
-    drop: ["console", "debugger"],
-    outfile: "dist/esnacc-openapi-sdk-browser.js",
+    outfile: "dist/esnacc-openapi-sdk.mjs",
 });
 
 await esbuild.build({

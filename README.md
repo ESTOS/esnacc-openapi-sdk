@@ -42,7 +42,8 @@ SDK({
 })
 ```
 
-Or use directly in the browser (possibly with unpackage).
+There is also a bundled version that sets `EsnaccOpenApiSDK` on window.
+You can use it like below:
 
 ```html
 <!DOCTYPE html>
@@ -53,12 +54,12 @@ Or use directly in the browser (possibly with unpackage).
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <title>MicroService Test Client</title>
-  <link rel="stylesheet" href="/esbuild/bundle.css" />
+  <link rel="stylesheet" href="https://unpkg.com/@estos/esnacc-openapi-sdk/dist/esnacc-openapi-sdk.css" />
 </head>
 
 <body>
   <div id="ui"></div>
-  <script type="text/javascript" src="/esbuild/bundle.js"></script>
+  <script type="text/javascript" href="https://unpkg.com/@estos/esnacc-openapi-sdk/dist/bundle.js"></script>
   <script>
     EsnaccOpenApiSDK({
       domId: "ui", schemas: [
