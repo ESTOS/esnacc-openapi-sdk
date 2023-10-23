@@ -1,5 +1,5 @@
 {
-  "name": "esnacc-openapi-sdk",
+  "name": "@estos/esnacc-openapi-sdk",
   "version": "1.0.0",
   "description": "Fancy frontend for showing and testing openapi schemas derived from asn1 files created trough esnacc",
   "main": "src/index.js",
