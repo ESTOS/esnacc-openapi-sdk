@@ -25,19 +25,28 @@ export function invokeWs(operationID: number, url: string, body: any, ws: WebSoc
     return new Promise((res, rej) => {
         const invokeID = getInvokeId();
         if (ws && ws.readyState == WebSocket.OPEN) {
+            const timeout = setTimeout(() => {
+                if (ws)
+                    ws.removeEventListener("message", awaiter);
+                system.websocketActions.addEvent(url, operationID, { time: new Date(), direction: "IN", payload: { message: "Remove listener after 10 Seconds (No response)", invokeID }, type: "error" });
+                rej("Remove listener after 10 Seconds (No response)");
+            }, 10000);
             const awaiter = (message: MessageEvent<any>) => {
                 try {
                     const data: RoseMessage<any> = JSON.parse(message.data);
-
                     if (data.result && data.result.invokeID == invokeID) {
-                        if (ws)
+                        if (ws) {
                             ws.removeEventListener("message", awaiter);
+                            clearTimeout(timeout);
+                        }
                         system.websocketActions.addEvent(url, operationID, { time: new Date(), direction: "IN", payload: structuredClone(data.result.result.result), type: "result" });
                         res({ status: 200, data: data.result.result.result });
                     }
                     else if (data.reject && data.reject.invokedID.invokedID == invokeID) {
-                        if (ws)
+                        if (ws) {
                             ws.removeEventListener("message", awaiter);
+                            clearTimeout(timeout);
+                        }
                         system.websocketActions.addEvent(url, operationID, { time: new Date(), direction: "IN", payload: structuredClone(data.reject.details), type: "reject" });
                         res({ status: 500, data: data.reject.details });
                     }
@@ -56,13 +65,6 @@ export function invokeWs(operationID: number, url: string, body: any, ws: WebSoc
             };
             ws.send(JSON.stringify(payload));
             system.websocketActions.addEvent(url, operationID, { time: new Date(), direction: "OUT", payload: structuredClone(body), type: "invoke" });
-
-            setTimeout(() => {
-                if (ws)
-                    ws.removeEventListener("message", awaiter);
-                system.websocketActions.addEvent(url, operationID, { time: new Date(), direction: "IN", payload: { message: "Remove listener after 10 Seconds (No response)", invokeID }, type: "error" });
-                rej("Remove listener after 10 Seconds (No response)");
-            }, 10000);
         }
         else {
             system.websocketActions.addEvent(url, operationID, { time: new Date(), direction: "OUT", payload: { message: "No websocket connection! Cant send request", invokeID }, type: "error" });
