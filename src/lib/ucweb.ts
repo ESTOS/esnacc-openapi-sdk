@@ -40,6 +40,13 @@ export async function connectToUcWeb(ucController: string, ucsId: string, userna
     }
 }
 
+export async function disconnectUcWeb() {
+    if (ws) {
+        ws.close();
+        ws = undefined;
+    }
+}
+
 export function getUcWebWebsocket() {
     return ws;
 }

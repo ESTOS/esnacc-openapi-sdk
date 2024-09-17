@@ -1,20 +1,15 @@
 import SwaggerUI from "swagger-ui-react";
-import StyledGrid from "./styles/StyledGrid";
 import { useEffect, useState } from "react";
 import "swagger-ui/dist/swagger-ui.css";
 import plugin from "./plugin";
 import Select from "react-select";
 import { SchemaSource } from "./types";
 import { fetchJson, mergeDeep } from "./utils";
-import { connectToUcWeb } from "./lib/ucweb";
+import UCConnect from "./components/UCConnect";
 
 const Comp = (props: { schemas: SchemaSource[]; ucconnect?: boolean }) => {
     const [selected, setSelected] = useState<any>(null);
     const [spec, setSpec] = useState<any>(undefined);
-    const [ucsId, setUcsId] = useState<string>("");
-    const [uccontroller, setUccontroller] = useState<string>("https://devuccontroller.ucconnect.de");
-    const [password, setPassword] = useState<string>("");
-    const [username, setUsername] = useState<string>("");
 
     useEffect(() => {
         if (selected) {
@@ -32,13 +27,7 @@ const Comp = (props: { schemas: SchemaSource[]; ucconnect?: boolean }) => {
     return (
         <>
             {props.ucconnect ? (
-                <StyledGrid columns={["max-content", "auto"]} style={{gap: "5px", paddingBottom: "5px"}}>
-                    <label>ucsid</label><input type="text" value={ucsId} onChange={(ev) => setUcsId(ev.target.value)}></input>
-                    <label>uccontroller</label><input type="text" value={uccontroller} onChange={(ev) => setUccontroller(ev.target.value)}></input>
-                    <label>username</label><input type="text" value={username} onChange={(ev) => setUsername(ev.target.value)}></input>
-                    <label>password</label><input type="password" value={password} onChange={(ev) => setPassword(ev.target.value)}></input>
-                    <button onClick={() => connectToUcWeb(uccontroller, ucsId, username, password)}>Connect</button>
-                </StyledGrid>
+                <UCConnect></UCConnect>
             ) : null}
             <Select
                 options={props.schemas.map((schema, index) => ({ value: schema.schemaUrl, label: schema.label ?? schema.schemaUrl, index }))}
@@ -47,7 +36,7 @@ const Comp = (props: { schemas: SchemaSource[]; ucconnect?: boolean }) => {
                     if (x) setSelected(x);
                 }}
             />
-            <SwaggerUI spec={spec} plugins={[plugin({ucconnect: props.ucconnect})]}></SwaggerUI>
+            <SwaggerUI spec={spec} plugins={[plugin({ ucconnect: props.ucconnect })]}></SwaggerUI>
         </>
     );
 };
