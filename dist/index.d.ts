@@ -11,6 +11,7 @@ export interface SchemaSource {
 export interface SDKOptions {
     schemas: SchemaSource[],
     domId: string,
+    ucconnect?: boolean
 }
 
 declare function renderSDK(args: SDKOptions): void;
