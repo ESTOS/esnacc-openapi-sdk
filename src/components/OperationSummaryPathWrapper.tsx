@@ -10,7 +10,7 @@ const Comp = (Original: any, system: any) => (props: any) => {
     } catch (error) { /* empty */ }
 
     const server = system.oas3Selectors.selectedServer();
-    const isWs = server && (server.startsWith("ws") || server.startsWith("wss"));
+    const isWs = (server && (server.startsWith("ws") || server.startsWith("wss"))) || system.ucconnect;
     const events: OwnEvent[] = system.websocketSelectors.getEvents(server, parseInt(operationId));
     const [length, setLength] = useState(0);
     const [timeOut, setTimeOut] = useState<null | NodeJS.Timeout>(null);

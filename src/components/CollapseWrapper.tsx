@@ -23,7 +23,7 @@ const Comp = (Original: any, system: any) => (props: any) => {
             if (path) {
                 
                 const server = system.oas3Selectors.selectedServer();
-                const isWs = server && (server.startsWith("ws") || server.startsWith("wss"));
+                const isWs = (server && (server.startsWith("ws") || server.startsWith("wss"))) || system.ucconnect;
                 
                 if (isWs) {
                     

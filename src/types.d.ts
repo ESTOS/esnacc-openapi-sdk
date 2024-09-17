@@ -43,4 +43,5 @@ export interface SchemaSource {
 export interface SDKOptions {
     schemas: SchemaSource[],
     domId: string,
+    ucconnect?: boolean
 }

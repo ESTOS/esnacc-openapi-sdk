@@ -16,7 +16,7 @@ import * as websocketSelectors from "./websocket/selectors";
  *
  * @param system
  */
-const Plugin = function () {
+const Plugin = function (rootInjects?: any) {
     return {
         wrapComponents: {
             Servers: ServerWrapper,
@@ -50,6 +50,7 @@ const Plugin = function () {
                 },
             },
         },
+        rootInjects
     };
 };
 

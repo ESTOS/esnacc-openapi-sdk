@@ -9,7 +9,8 @@ const HideSibling = css({
 
 const Comp = (Original: any, system: any) => (props: any) => {
     const server = system.oas3Selectors.selectedServer();
-    if (server && (server.startsWith("ws") || server.startsWith("wss"))) {
+    const isWs = (server && (server.startsWith("ws") || server.startsWith("wss"))) || system.ucconnect;
+    if (isWs) {
         return <div className={HideSibling}></div>;
     }
     return <Original {...props}></Original>;

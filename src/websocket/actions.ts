@@ -1,3 +1,4 @@
+import { getUcWebWebsocket } from "../lib/ucweb";
 import { OwnEvent, RoseMessage } from "../types";
 
 export const setWebsocket = (ws: WebSocket, server: string) => {
@@ -8,34 +9,36 @@ export const setWebsocket = (ws: WebSocket, server: string) => {
 };
 
 export const initWebsocket = (server: string) => (system: any) => {
-    if (server.startsWith("ws") || server.startsWith("wss")) {
+    if (server.startsWith("ws") || server.startsWith("wss") || system.ucconnect) {
         const ws: WebSocket | undefined = system.websocketSelectors.getWebsocket(server);
 
         // Only create if closed or not open yet
         if (ws == undefined || ws.readyState == ws.CLOSED) {
-            const newWS = new WebSocket(server);
-            newWS.addEventListener("message", (m) => {
-                try {
-                    const payload: RoseMessage<any> = JSON.parse(m.data);
-                    if (payload.invoke) {
-                        system.websocketActions.addEvent(server, payload.invoke.operationID, {
-                            time: new Date(),
-                            direction: "IN",
-                            payload: structuredClone(payload.invoke.argument),
-                            type: "invoke",
-                        });
+            const newWS = system.ucconnect ? getUcWebWebsocket() : new WebSocket(server);
+            if (newWS) {
+                newWS.addEventListener("message", (m) => {
+                    try {
+                        const payload: RoseMessage<any> = JSON.parse(m.data);
+                        if (payload.invoke) {
+                            system.websocketActions.addEvent(server, payload.invoke.operationID, {
+                                time: new Date(),
+                                direction: "IN",
+                                payload: structuredClone(payload.invoke.argument),
+                                type: "invoke",
+                            });
+                        }
+                    } catch (error) {
+                        console.log(error);
                     }
-                } catch (error) {
-                    console.log(error);
-                }
-            });
-
-            newWS.addEventListener("close", () => {
-                // Reconnect on ws close
-                system.websocketActions.initWebsocket(server);
-            });
-
-            system.websocketActions.setWebsocket(newWS, server);
+                });
+    
+                newWS.addEventListener("close", () => {
+                    // Reconnect on ws close
+                    system.websocketActions.initWebsocket(server);
+                });
+    
+                system.websocketActions.setWebsocket(newWS, server);
+            }
         }
     }
 

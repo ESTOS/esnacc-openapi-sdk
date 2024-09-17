@@ -10,7 +10,7 @@ const ButtonStyle = css({
 
 const Comp = (Original: any, system: any) => (props: any) => {
     const server = system.oas3Selectors.selectedServer();
-    if (server && (server.startsWith("ws") || server.startsWith("wss"))) {
+    if ((server && (server.startsWith("ws") || server.startsWith("wss"))) || system.ucconnect) {
         return <></>;
     }
     return (

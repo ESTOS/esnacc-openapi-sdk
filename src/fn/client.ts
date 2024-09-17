@@ -74,7 +74,6 @@ export function invokeWs(operationID: number, url: string, body: any, ws: WebSoc
 }
 
 export function eventWs(operationID: number, url: string, body: any, ws: WebSocket | undefined, system: any) {
-
     if (ws && ws.readyState == WebSocket.OPEN) {
         const payload = {
             "invoke": {
