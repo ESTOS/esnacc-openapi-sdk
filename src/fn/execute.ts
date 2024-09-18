@@ -5,6 +5,7 @@ import { eventWs, invokeWs } from "./client";
 export const userExecute = (args: any) => {
     const system = args.system;
     const urlBase: string = baseUrl(args);
+    const operationName = (args.pathName as string).replace("/", "");
     if (args.spec.paths[args.pathName][args.method].operationId == undefined)
         throw new Error("OperationId needs to be specified in OpenApi otherwise WS cant be used.");
     const operationID = parseInt(args.spec.paths[args.pathName][args.method].operationId);
@@ -23,10 +24,10 @@ export const userExecute = (args: any) => {
                         args.spec.paths[args.pathName][args.method].responses["500"]
                     ) {
                         // This invoke has a result
-                        data = await invokeWs(operationID, urlBase, JSON.parse(args.requestBody), system.websocketSelectors.getWebsocket(urlBase), system);
+                        data = await invokeWs(operationID, operationName, urlBase, JSON.parse(args.requestBody), system.websocketSelectors.getWebsocket(urlBase), system);
                     } else {
                         // This is an event
-                        eventWs(operationID, urlBase, JSON.parse(args.requestBody), system.websocketSelectors.getWebsocket(urlBase), system);
+                        eventWs(operationID, operationName, urlBase, JSON.parse(args.requestBody), system.websocketSelectors.getWebsocket(urlBase), system);
                         data = { status: 200, data: "Event has been emitted!" };
                     }
 

@@ -1,7 +1,8 @@
+import { getUcWebSessionId } from "../lib/ucweb";
 import { RoseMessage } from "../types";
 import { eventOperationId, getInvokeId } from "../utils";
 
-export async function invokeRest(operationID: number, url: string, body: any) {
+export async function invokeRest(operationID: number, operationName: string, url: string, body: any) {
     const options: RequestInit = {
         method: "POST",
         headers: {
@@ -11,7 +12,9 @@ export async function invokeRest(operationID: number, url: string, body: any) {
             {
                 "invoke": {
                     "invokeID": getInvokeId(),
+                    sessionID: getUcWebSessionId(),
                     operationID: operationID,
+                    operationName,
                     "argument": body
                 }
             }
@@ -21,7 +24,7 @@ export async function invokeRest(operationID: number, url: string, body: any) {
     return resp;
 }
 
-export function invokeWs(operationID: number, url: string, body: any, ws: WebSocket | undefined, system: any): Promise<{ status: 200 | 500, data: any }> {
+export function invokeWs(operationID: number, operationName: string, url: string, body: any, ws: WebSocket | undefined, system: any): Promise<{ status: 200 | 500, data: any }> {
     return new Promise((res, rej) => {
         const invokeID = getInvokeId();
         if (ws && ws.readyState == WebSocket.OPEN) {
@@ -33,22 +36,25 @@ export function invokeWs(operationID: number, url: string, body: any, ws: WebSoc
             }, 10000);
             const awaiter = (message: MessageEvent<any>) => {
                 try {
-                    const data: RoseMessage<any> = JSON.parse(message.data);
-                    if (data.result && data.result.invokeID == invokeID) {
-                        if (ws) {
-                            ws.removeEventListener("message", awaiter);
-                            clearTimeout(timeout);
+                    const parsedData: RoseMessage<any> | Array<RoseMessage<any>> = JSON.parse(message.data);
+                    const dataArray = Array.isArray(parsedData) ? parsedData : [parsedData];
+                    for (const data of dataArray) {
+                        if (data.result && data.result.invokeID == invokeID) {
+                            if (ws) {
+                                ws.removeEventListener("message", awaiter);
+                                clearTimeout(timeout);
+                            }
+                            system.websocketActions.addEvent(url, operationID, { time: new Date(), direction: "IN", payload: structuredClone(data.result.result.result), type: "result" });
+                            res({ status: 200, data: data.result.result.result });
                         }
-                        system.websocketActions.addEvent(url, operationID, { time: new Date(), direction: "IN", payload: structuredClone(data.result.result.result), type: "result" });
-                        res({ status: 200, data: data.result.result.result });
-                    }
-                    else if (data.reject && data.reject.invokedID.invokedID == invokeID) {
-                        if (ws) {
-                            ws.removeEventListener("message", awaiter);
-                            clearTimeout(timeout);
+                        else if (data.reject && data.reject.invokedID.invokedID == invokeID) {
+                            if (ws) {
+                                ws.removeEventListener("message", awaiter);
+                                clearTimeout(timeout);
+                            }
+                            system.websocketActions.addEvent(url, operationID, { time: new Date(), direction: "IN", payload: structuredClone(data.reject.details), type: "reject" });
+                            res({ status: 500, data: data.reject.details });
                         }
-                        system.websocketActions.addEvent(url, operationID, { time: new Date(), direction: "IN", payload: structuredClone(data.reject.details), type: "reject" });
-                        res({ status: 500, data: data.reject.details });
                     }
                 } catch (error) {
                     console.log(error);
@@ -59,7 +65,9 @@ export function invokeWs(operationID: number, url: string, body: any, ws: WebSoc
             const payload = {
                 "invoke": {
                     invokeID,
+                    sessionID: getUcWebSessionId(),
                     operationID: operationID,
+                    operationName,
                     "argument": body
                 }
             };
@@ -73,12 +81,14 @@ export function invokeWs(operationID: number, url: string, body: any, ws: WebSoc
     });
 }
 
-export function eventWs(operationID: number, url: string, body: any, ws: WebSocket | undefined, system: any) {
+export function eventWs(operationID: number, operationName: string, url: string, body: any, ws: WebSocket | undefined, system: any) {
     if (ws && ws.readyState == WebSocket.OPEN) {
         const payload = {
             "invoke": {
                 invokeID: eventOperationId,
+                sessionID: getUcWebSessionId(),
                 operationID: operationID,
+                operationName,
                 "argument": body
             }
         };

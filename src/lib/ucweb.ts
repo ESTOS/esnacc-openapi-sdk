@@ -1,6 +1,7 @@
 import { getUCWeb } from "./uccontroller";
 
 let ws: WebSocket | undefined;
+let session: string | undefined;
 
 async function getUcWebSession(ucWeb: string, ucsId: string, username: string, password: string): Promise<string> {
     const headers = new Headers();
@@ -36,6 +37,7 @@ export async function connectToUcWeb(ucController: string, ucsId: string, userna
     if (ws === undefined || ws.readyState == ws.CLOSED) {
         const ucWeb = await getUCWeb(ucController, ucsId);
         const sessionId = await getUcWebSession(ucWeb, ucsId, username, password);
+        session = sessionId;
         ws = new WebSocket(ucWeb + "/ws/client/websocket/?x-ucsessionid=" + sessionId);
     }
 }
@@ -44,7 +46,12 @@ export async function disconnectUcWeb() {
     if (ws) {
         ws.close();
         ws = undefined;
+        session = undefined;
     }
+}
+
+export function getUcWebSessionId() {
+    return session;
 }
 
 export function getUcWebWebsocket() {

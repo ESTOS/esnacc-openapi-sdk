@@ -18,14 +18,17 @@ export const initWebsocket = (server: string) => (system: any) => {
             if (newWS) {
                 newWS.addEventListener("message", (m) => {
                     try {
-                        const payload: RoseMessage<any> = JSON.parse(m.data);
-                        if (payload.invoke) {
-                            system.websocketActions.addEvent(server, payload.invoke.operationID, {
-                                time: new Date(),
-                                direction: "IN",
-                                payload: structuredClone(payload.invoke.argument),
-                                type: "invoke",
-                            });
+                        const payloadData: RoseMessage<any> | Array<RoseMessage<any>> = JSON.parse(m.data);
+                        const payloadArray = Array.isArray(payloadData) ? payloadData : [payloadData];
+                        for (const payload of payloadArray) {
+                            if (payload.invoke) {
+                                system.websocketActions.addEvent(server, payload.invoke.operationID, {
+                                    time: new Date(),
+                                    direction: "IN",
+                                    payload: structuredClone(payload.invoke.argument),
+                                    type: "invoke",
+                                });
+                            }
                         }
                     } catch (error) {
                         console.log(error);
