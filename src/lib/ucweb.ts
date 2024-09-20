@@ -3,7 +3,7 @@ import { getUCWeb } from "./uccontroller";
 let ws: WebSocket | undefined;
 let session: string | undefined;
 
-async function getUcWebSession(ucWeb: string, ucsId: string, username: string, password: string): Promise<string> {
+async function getUcWebSession(ucWeb: string, ucsId: string, username: string, password: string): Promise<[string, string]> {
     const headers = new Headers();
     headers.append("X-Ucsid", ucsId);
     headers.append(
@@ -25,21 +25,26 @@ async function getUcWebSession(ucWeb: string, ucsId: string, username: string, p
         data &&
         "sessionid" in data &&
         typeof data.sessionid === "string"
-        
+
     ) {
-        return data.sessionid;
+        if ("ownContact" in data && typeof data.ownContact === "object" && data.ownContact && "u8sContactId" in data.ownContact && "u8sContactId" in data.ownContact &&
+            typeof data.ownContact.u8sContactId === "string")
+            return [data.sessionid, data.ownContact.u8sContactId];
+        return [data.sessionid, ""];
     }
-    
-    throw new Error("Could not get sessionId from UcWeb");
+
+    throw new Error("Error getting session from UCWeb\nStatus code: " + resp.status + "\nBody:\n" + JSON.stringify(data, null, 4));
 }
 
-export async function connectToUcWeb(ucController: string, ucsId: string, username: string, password: string) {
+export async function connectToUcWeb(ucController: string, ucsId: string, username: string, password: string): Promise<string | undefined> {
     if (ws === undefined || ws.readyState == ws.CLOSED) {
         const ucWeb = await getUCWeb(ucController, ucsId);
-        const sessionId = await getUcWebSession(ucWeb, ucsId, username, password);
+        const [sessionId, contactId] = await getUcWebSession(ucWeb, ucsId, username, password);
         session = sessionId;
         ws = new WebSocket(ucWeb + "/ws/client/websocket/?x-ucsessionid=" + sessionId);
+        return contactId;
     }
+    return undefined;
 }
 
 export async function disconnectUcWeb() {

@@ -42,8 +42,11 @@ const Comp = () => {
                             setConnected(false);
                         });
                     else
-                        connectToUcWeb(uccontroller, ucsId, username, password).then(() => {
-                            setLastError("");
+                        connectToUcWeb(uccontroller, ucsId, username, password).then((contactId) => {
+                            if (contactId)
+                                setLastError(contactId);
+                            else
+                                setLastError("");
                             setConnected(true);
                         }).catch((err): any => {
                             console.log(err);
@@ -56,7 +59,7 @@ const Comp = () => {
             >
                 {connected ? "Disconnect" : "Connect"}
             </button>
-            <div>{lastError}</div>
+            <div style={{ whiteSpace: "break-spaces" }}>{lastError}</div>
         </StyledGrid>
     );
 };
